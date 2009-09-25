@@ -1,0 +1,27 @@
+<module>
+	<rawname>bosssecretary</rawname>
+	<name>Boss Secretary</name>
+	<version>0.4</version>
+	<changelog>
+		*0.1* Test New Module
+		*0.1.1* Se agregaron dos columnas a la tabla bosssecretary_group, la corresponden a dring y ringtime
+		*0.1.2* Group Number ahora se generara automáticamente. Cuando se elimine un group number este quedará disponible y se usara para el nuevo grupo de jefe secretaria que se cree.
+		*0.1.3* Ring Time y Alert Info ya no están disponibles. Alert Info será siempre alert-external. Se corrigió bug de llamadas entre miembros del mismo grupo. El módulo se puede activar o desactivar con la llamada de una extensión por cualquier miembro del grupo, por defecto *152.
+		*0.2* Toggle y botones para activar y desactivas grupo. Alert-Info es ahora siempre alert-group. Los telefonos se suscriben al contexto de su grupo. Formulario para busqueda de extensiones
+		*0.2.1* Se agrego la clase de extensiones chiefs a los grupos de jefe-secretaria. Las extensiones que pertenezcan a esta clase de extensión saltaran el grupo. Había un pequeño error al crear la numeració automática, fue corregido 
+		*0.2.2* Se agrega correctamente al contexto from-internal-additional, para custom-contexts
+		*0.3* Se corrige el error al agregar nuevo grupo, los chiefs no eran asociados al grupo. Se corrige el error de si un grupo no tenia chiefs el dialplan no se generaba. Se mejora la logica del modulo y la ejecución es mucho más rapida porque ahora se usa más la base de datos de asterisk. La Base de datos de asterisk no queda con datos ociosos del modulo como antes.
+		*0.4* Ahora para llamar a los telefonos se usa el macro Dial y no la aplicacion dial directamente.  
+	</changelog>
+	<type>setup</type>
+	<category>Inbound Call Control</category>
+	<description>
+		The boss-secretary module creates a special ring group which includes
+one or more "bosses" and one or more secretaries". When someone calls
+the boss' extension, the secretary (or secretaries) extension will ring
+too, allowing the secretary to answer his or her boss' call.
+	</description>
+	<menuitems>
+		<bosssecretary>Boss Secretary</bosssecretary>
+	</menuitems>
+</module>
