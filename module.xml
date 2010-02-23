@@ -19,7 +19,7 @@
 		The boss-secretary module creates a special ring group which includes
 one or more "bosses" and one or more secretaries". When someone calls
 the boss' extension, the secretary (or secretaries) extension will ring
-too, allowing the secretary to answer his or her boss' call.
+too, allowing the secretary to answer his or her boss' call. .  Developed by Maikel Salazar. Sponsored by TI Soluciones http://www.solucionesit.com.ve
 	</description>
 	<menuitems>
 		<bosssecretary>Boss Secretary</bosssecretary>

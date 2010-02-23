@@ -1,5 +1,6 @@
 <?php /* $Id: page.bosssecretary.php   $ */
-//Copyright (C) 2008 TI Soluciones (msalazar at solucionesit dot com dot ve)
+// Developed by Maikel Salazar (maikelsalazar at gmail dot com)
+// Sponsored by TI Soluciones, http://www.solucionesit.com.ve
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
