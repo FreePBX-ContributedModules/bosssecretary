@@ -90,7 +90,7 @@ function bosssecretary_get_config($engine){
 				$ext->add($ctx_app_on, $fcc_on, '', new ext_hangup());
 				$ext->add($ctx_app_on, $fcc_on, 'exit', new ext_noop('${AMPUSER} doesn\\\'t belongs bosssecretary group'));
 				$ext->add($ctx_app_on, $fcc_on, '', new ext_hangup());
-				$ext->add($ctx_app_on, 'sstate', '', new ext_setvar('DEVSTATE(Custom:BSC${GROUP})','${STATE}'));
+				$ext->add($ctx_app_on, 'sstate', '', new ext_setvar('DEVICE_STATE(Custom:BSC${GROUP})','${STATE}'));
 				$ext->add($ctx_app_on, 'sstate', 'return', new ext_return());
 
 
@@ -102,13 +102,13 @@ function bosssecretary_get_config($engine){
 				$ext->add($ctx_app_off, $fcc_off, '', new ext_gotoif('${DB_EXISTS(bosssecretary/group/member/${AMPUSER})}','off','exit'));
 				$ext->add($ctx_app_off, $fcc_off, 'off', new ext_setvar('GROUP','${DB(bosssecretary/group/member/${AMPUSER})}'));
 				$ext->add($ctx_app_off, $fcc_off, "", new ext_setvar('DB(bosssecretary/group/${GROUP}/locked)',"1"));
-				$ext->add($ctx_app_off, $fcc_off, '', new ext_setvar('STATE','BUSY'));
+				$ext->add($ctx_app_off, $fcc_off, '', new ext_setvar('STATE','INUSE'));
 				$ext->add($ctx_app_off, $fcc_off, '', new ext_gosub('1','sstate',$ctx_app_off));
 				$ext->add($ctx_app_off, $fcc_off, '', new ext_playback('de-activated'));
 				$ext->add($ctx_app_off, $fcc_off, '', new ext_hangup());
 				$ext->add($ctx_app_off, $fcc_off, 'exit', new ext_noop('${AMPUSER} doesn\\\'t belongs bosssecretary group'));
 				$ext->add($ctx_app_off, $fcc_off, '', new ext_hangup());
-				$ext->add($ctx_app_off, 'sstate', '', new ext_setvar('DEVSTATE(Custom:BSC${GROUP})','${STATE}'));
+				$ext->add($ctx_app_off, 'sstate', '', new ext_setvar('DEVICE_STATE(Custom:BSC${GROUP})','${STATE}'));
 				$ext->add($ctx_app_off, 'sstate', 'return', new ext_return());
 
 				// :::: BSC Toggle [app-bosssecretary-toggle] ::::
@@ -120,7 +120,7 @@ function bosssecretary_get_config($engine){
 				$ext->add($ctx_app_toggle, $fcc_toggle, 'check', new ext_setvar('GROUP','${DB(bosssecretary/group/member/${AMPUSER})}'));
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_gotoif('${DB_EXISTS(bosssecretary/group/${GROUP}/locked)}','unlock', 'lock'));
 				$ext->add($ctx_app_toggle, $fcc_toggle, "lock", new ext_setvar('DB(bosssecretary/group/${GROUP}/locked)',"1"));
-				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_setvar('STATE','BUSY'));
+				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_setvar('STATE','INUSE'));
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_gosub('1','sstate',$ctx_app_toggle));
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_playback('de-activated'));
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_hangup());
@@ -131,7 +131,7 @@ function bosssecretary_get_config($engine){
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_hangup());
 				$ext->add($ctx_app_toggle, $fcc_toggle, 'exit', new ext_noop('${AMPUSER} doesn\\\'t belongs bosssecretary group'));
 				$ext->add($ctx_app_toggle, $fcc_toggle, '', new ext_hangup());
-				$ext->add($ctx_app_toggle, 'sstate', '', new ext_setvar('DEVSTATE(Custom:BSC${GROUP})','${STATE}'));
+				$ext->add($ctx_app_toggle, 'sstate', '', new ext_setvar('DEVICE_STATE(Custom:BSC${GROUP})','${STATE}'));
 				$ext->add($ctx_app_toggle, 'sstate', 'return', new ext_return());
 
 				// :::: BSC Hints [app-bosssecretary-hints] ::::
@@ -173,15 +173,13 @@ function bosssecretary_get_config($engine){
 						$ext->add($ctx_bsc, $extension, 'run_module', new ext_noop("Bosssecretary: Executing module"));
 						$ext->add($ctx_bsc, $extension, '', new ext_sipaddheader("Alert-Info", "<http://nohost>\;info=alert-group\;x-line-id=0"));
 						$extensions = array();
+						
+						// David
 						foreach ($group["secretaries"] as $sip_extension)
 						{
 							$extensions[] = "$sip_extension";
 						}
-						$extensions[] = "$extension";
-						/*
-						exten => 105,n,Dial(SIP/108&SIP/105,)
-						exten => 105,n,Macro(dial,20,${DIAL_OPTIONS},108-105)
-						*/
+						//	$extensions[] = "$extension";
 						$args = '${RINGTIMER},${DIAL_OPTIONS},' . implode ("-", $extensions);
 						$ext->add($ctx_bsc, $extension, '', new ext_macro ("dial", $args));
 						$ext->add($ctx_bsc, $extension, 'exit_module', new ext_noop("Bosssecretary: Exit") );
