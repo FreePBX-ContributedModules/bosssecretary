@@ -99,7 +99,7 @@ foreach ($results as $column)
 }
 
 $sql = "ALTER TABLE bosssecretary_group MODIFY id_group INT(10) NOT NULL";
-$results = $db->getAll($sql);
+$results = $db->query($sql);
 if(DB::IsError($results)) {
 	die_freepbx("Can not modify bosssecretary_group.id_group column");
 }
