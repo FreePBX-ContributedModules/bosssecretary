@@ -42,14 +42,14 @@ function bosssecretary_get_config($engine){
 			$ctx_app_hints	=	BOSSSECRETARY_HINTS;
 			$ctx_bsc		=	BOSSSECRETARY_CONTEXT;
 
-			$ext->addInclude('from-internal-additional', $ctx_bsc);
-			$ext->addInclude($ctx_bsc, $ctx_app_toggle);
-			$ext->addInclude($ctx_bsc, $ctx_app_on);
-			$ext->addInclude($ctx_bsc, $ctx_app_off);
-			$ext->addInclude($ctx_bsc, $ctx_app_hints);
-
 			if (!empty($groups))
 			{
+				
+				$ext->addInclude('from-internal-additional', $ctx_bsc);
+				$ext->addInclude($ctx_bsc, $ctx_app_toggle);
+				$ext->addInclude($ctx_bsc, $ctx_app_on);
+				$ext->addInclude($ctx_bsc, $ctx_app_off);
+				$ext->addInclude($ctx_bsc, $ctx_app_hints);
 
 				$astman->database_deltree("bosssecretary/group");
 				$groups = bosssecretary_to_group($groups);
