@@ -1,3 +1,7 @@
+# OBSOLETE!
+
+The module is now here https://github.com/nethesis/ns8-nethvoice
+
 ### bosssecretary module for FreePBX
 
 The boss-secretary module creates a special **ring group** which includes
