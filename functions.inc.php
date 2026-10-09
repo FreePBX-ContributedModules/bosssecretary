@@ -42,14 +42,14 @@ function bosssecretary_get_config($engine){
 			$ctx_app_hints	=	BOSSSECRETARY_HINTS;
 			$ctx_bsc		=	BOSSSECRETARY_CONTEXT;
 
-			$ext->addInclude('from-internal-additional', $ctx_bsc);
-			$ext->addInclude($ctx_bsc, $ctx_app_toggle);
-			$ext->addInclude($ctx_bsc, $ctx_app_on);
-			$ext->addInclude($ctx_bsc, $ctx_app_off);
-			$ext->addInclude($ctx_bsc, $ctx_app_hints);
-
 			if (!empty($groups))
 			{
+				
+				$ext->addInclude('from-internal-additional', $ctx_bsc);
+				$ext->addInclude($ctx_bsc, $ctx_app_toggle);
+				$ext->addInclude($ctx_bsc, $ctx_app_on);
+				$ext->addInclude($ctx_bsc, $ctx_app_off);
+				$ext->addInclude($ctx_bsc, $ctx_app_hints);
 
 				$astman->database_deltree("bosssecretary/group");
 				$groups = bosssecretary_to_group($groups);
@@ -171,7 +171,7 @@ function bosssecretary_get_config($engine){
 						$ext->add($ctx_bsc, $extension, '', new ext_gotoif('${DB_EXISTS(bosssecretary/group/'.$id_group.'/member/${CALLER})}','exit_module'));
 						$ext->add($ctx_bsc, $extension, '', new ext_gotoif('${DB_EXISTS(bosssecretary/group/'.$id_group.'/locked)}','exit_module','run_module'));
 						$ext->add($ctx_bsc, $extension, 'run_module', new ext_noop("Bosssecretary: Executing module"));
-						$ext->add($ctx_bsc, $extension, '', new ext_sipaddheader("Alert-Info", "<http://nohost>\;info=alert-group\;x-line-id=0"));
+						$ext->add($ctx_bsc, $extension, '', new ext_gosub(1,'s','func-set-sipheader', 'Alert-Info,<http://nohost>\;info=alert-group\;x-line-id=0'));
 						$extensions = array();
 						
 						// David
@@ -790,7 +790,7 @@ function bosssecretary_array_to_mysql_param_in(array $params)
 	{
 		array_push($arrParams, "'" .$db->escapeSimple($value). "'");
 	}
-	return implode($arrParams, ", ");
+	return implode(", ", $arrParams);
 }
 
 
@@ -977,9 +977,9 @@ function bosssecretary_get_form_add( array $params)
 {
 	$vars["form_title"] = "Add Group";
 	$vars["form_url"] = "config.php?display=bosssecretary&bsgroupdisplay=".BOSSSECRETARY_PARAM_PREFIX. "add";
-	$vars["bosses_extensions"] 		=	(isset($params["bosses"])) ? implode($params["bosses"], "\n") : '';
-	$vars["secretaries_extensions"]	=	(isset($params["secretaries"])) ? implode($params["secretaries"], "\n") : '';
-	$vars["chiefs_extensions"]	=	(isset($params["chiefs"])) ? implode($params["chiefs"], "\n") : '';
+	$vars["bosses_extensions"] 		=	(isset($params["bosses"])) ? implode("\n", $params["bosses"]) : '';
+	$vars["secretaries_extensions"]	=	(isset($params["secretaries"])) ? implode("\n", $params["secretaries"]) : '';
+	$vars["chiefs_extensions"]	=	(isset($params["chiefs"])) ? implode("\n", $params["chiefs"]) : '';
 	$vars["group_label"] = (isset($params["group_label"])) ? $params["group_label"] : '';
 	$vars["delete_button"] = "";
 	$vars["action"] = "Add";
@@ -993,9 +993,9 @@ function bosssecretary_get_form_edit( array $params)
 {
 	$vars["form_title"] = "Edit Group";
 	$vars["form_url"] = "config.php?display=bosssecretary&bsgroupdisplay=".BOSSSECRETARY_PARAM_PREFIX. $params["group_number"];
-	$vars["bosses_extensions"] = (isset($params["bosses"])) ? implode($params["bosses"], "\n") : '';
-	$vars["secretaries_extensions"] = (isset($params["secretaries"])) ? implode($params["secretaries"], "\n") : '';
-	$vars["chiefs_extensions"]	=	(isset($params["chiefs"])) ? implode($params["chiefs"], "\n") : '';
+	$vars["bosses_extensions"] = (isset($params["bosses"])) ? implode("\n", $params["bosses"]) : '';
+	$vars["secretaries_extensions"] = (isset($params["secretaries"])) ? implode("\n", $params["secretaries"]) : '';
+	$vars["chiefs_extensions"]	=	(isset($params["chiefs"])) ? implode("\n", $params["chiefs"]) : '';
 	$vars["group_number"] = $params["group_number"];
 	$vars["group_label"] = $params["group_label"];
 	$vars["delete_button"] = bosssecretary_get_delete_button();

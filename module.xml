@@ -1,10 +1,11 @@
 <module>
 	<rawname>bosssecretary</rawname>
 	<name>Boss Secretary</name>
-	<version>1.0</version>
+	<version>1.0.3</version>
 	<changelog>
 		*1.0* Module changed to new dialpan. Module is now compatible with Asterisk 1.6X and newer with all BLF functionality.
 	</changelog>
+	<license>Unknown</license>
 	<type>setup</type>
 	<category>Inbound Call Control</category>
 	<description>

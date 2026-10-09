@@ -72,7 +72,7 @@ if(DB::IsError($check)) {
 
 
 $sql = "SHOW COLUMNS FROM `bosssecretary_group`";
-$results = $db->getAll($sql);
+$results = $db->getAll($sql, array(), DB_FETCHMODE_ASSOC);
 if(DB::IsError($results)) {
 	die_freepbx("Can not check bosssecretary_group table");
 }
